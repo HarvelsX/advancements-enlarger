@@ -60,7 +60,7 @@ public class BiggerAdvancementWidget extends DrawableHelper {
         this.yPos = MathHelper.floor(display.getY() * 27.0F);
         int i = advancement.getRequirementCount();
         int j = String.valueOf(i).length();
-        int k = i > 1 ? client.textRenderer.getStringWidth("  ") + client.textRenderer.getStringWidth("0") * j * 2 + client.textRenderer.getStringWidth("/") : 0;
+        int k = i > 1 ? client.textRenderer.getWidth("  ") + client.textRenderer.getWidth("0") * j * 2 + client.textRenderer.getWidth("/") : 0;
         int l = 29 + client.textRenderer.getWidth(this.title) + k;
         Text description = display.getDescription();
         this.description = Language.getInstance().reorder(this.wrapDescription(description, l));
@@ -153,9 +153,9 @@ public class BiggerAdvancementWidget extends DrawableHelper {
             }
             
             RenderSystem.setShaderTexture(0, WIDGETS_TEX);
-            this.drawTexture(matrices, x + this.xPos + 3, y + this.yPos, this.display.getFrame().texV(), 128 + advancementObtainedStatus2.getSpriteIndex() * 26, 26, 26);
+            this.drawTexture(matrices, x + this.xPos + 3, y + this.yPos, this.display.getFrame().getTextureV(), 128 + advancementObtainedStatus2.getSpriteIndex() * 26, 26, 26);
             Vector4f vector4f = new Vector4f(x + this.xPos + 8, y + this.yPos + 5, 0, 1.0F);
-            vector4f.transform(matrices.peek().getModel());
+            vector4f.transform(matrices.peek().getPositionMatrix());
             this.client.getItemRenderer().zOffset += vector4f.getZ();
             this.client.getItemRenderer().renderInGui(this.display.getIcon(), (int) vector4f.getX(), (int) vector4f.getY());
             this.client.getItemRenderer().zOffset -= vector4f.getZ();
@@ -177,7 +177,7 @@ public class BiggerAdvancementWidget extends DrawableHelper {
     public void drawTooltip(MatrixStack matrices, int originX, int originY, float alpha, int x, int y) {
         boolean bl = x + originX + this.xPos + this.width + 26 >= this.tab.getScreen().width;
         String string = this.progress == null ? null : this.progress.getProgressBarFraction();
-        int i = string == null ? 0 : this.client.textRenderer.getStringWidth(string);
+        int i = string == null ? 0 : this.client.textRenderer.getWidth(string);
         int var10000 = 113 - originY - this.yPos - 26;
         int var10002 = this.description.size();
         boolean bl2 = var10000 <= 6 + var10002 * 9;
@@ -231,7 +231,7 @@ public class BiggerAdvancementWidget extends DrawableHelper {
         
         this.drawTexture(matrices, n, l, 0, advancementObtainedStatus10.getSpriteIndex() * 26, j, 26);
         this.drawTexture(matrices, n + j, l, 200 - k, advancementObtainedStatus11.getSpriteIndex() * 26, k, 26);
-        this.drawTexture(matrices, originX + this.xPos + 3, originY + this.yPos, this.display.getFrame().texV(), 128 + advancementObtainedStatus12.getSpriteIndex() * 26, 26, 26);
+        this.drawTexture(matrices, originX + this.xPos + 3, originY + this.yPos, this.display.getFrame().getTextureV(), 128 + advancementObtainedStatus12.getSpriteIndex() * 26, 26, 26);
         if (bl) {
             this.client.textRenderer.drawWithShadow(matrices, this.title, (float) (n + 5), (float) (originY + this.yPos + 9), -1);
             if (string != null) {
@@ -268,7 +268,7 @@ public class BiggerAdvancementWidget extends DrawableHelper {
         }
         
         Vector4f vector4f = new Vector4f(originX + this.xPos + 8, originY + this.yPos + 5, 0, 1.0F);
-        vector4f.transform(matrices.peek().getModel());
+        vector4f.transform(matrices.peek().getPositionMatrix());
         this.client.getItemRenderer().zOffset += vector4f.getZ();
         this.client.getItemRenderer().renderInGui(this.display.getIcon(), (int) vector4f.getX(), (int) vector4f.getY());
         this.client.getItemRenderer().zOffset -= vector4f.getZ();

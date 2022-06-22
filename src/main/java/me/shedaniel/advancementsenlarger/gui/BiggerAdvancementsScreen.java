@@ -19,7 +19,8 @@ import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.NarratorManager;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.network.packet.c2s.play.AdvancementTabC2SPacket;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.TranslatableTextContent;
 import net.minecraft.util.Identifier;
 
 import java.util.Iterator;
@@ -109,8 +110,8 @@ public class BiggerAdvancementsScreen extends Screen implements ClientAdvancemen
     
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (this.client.options.keyAdvancements.matchesKey(keyCode, scanCode)) {
-            this.client.openScreen(null);
+        if (this.client.options.advancementsKey.matchesKey(keyCode, scanCode)) {
+            this.client.setScreen(null);
             this.client.mouse.lockCursor();
             return true;
         } else {
@@ -150,9 +151,9 @@ public class BiggerAdvancementsScreen extends Screen implements ClientAdvancemen
         if (advancementTab == null) {
             fill(matrices, x + 9, i + 18, width - 9, height - 17, -16777216);
             String string = I18n.translate("advancements.empty");
-            int j = this.textRenderer.getStringWidth(string);
+            int j = this.textRenderer.getWidth(string);
             textRenderer.draw(matrices, string, (width - j) / 2, (height - 33) / 2 + 33 - 9 / 2, -1);
-            textRenderer.draw(matrices, ":(", (width - this.textRenderer.getStringWidth(":(")) / 2, (height - 33) / 2 + 33 + 9 + 9 / 2, -1);
+            textRenderer.draw(matrices, ":(", (width - this.textRenderer.getWidth(":(")) / 2, (height - 33) / 2 + 33 + 9 + 9 / 2, -1);
         } else {
             matrices.push();
             matrices.translate((float) (x + 9), (float) (i + 18), 0.0F);
@@ -188,7 +189,7 @@ public class BiggerAdvancementsScreen extends Screen implements ClientAdvancemen
             RenderSystem.disableBlend();
         }
         
-        this.textRenderer.draw(matrices, new TranslatableText("gui.advancements"), (float) (x + 8), (float) (i + 6), isDarkMode() ? -1 : 4210752);
+        this.textRenderer.draw(matrices, MutableText.of(new TranslatableTextContent("gui.advancements")), (float) (x + 8), (float) (i + 6), isDarkMode() ? -1 : 4210752);
     }
     
     private void drawWindow(MatrixStack matrices, int x, int y) {

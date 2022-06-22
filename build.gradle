@@ -1,7 +1,7 @@
 plugins {
-    id 'fabric-loom' version "0.8-SNAPSHOT"
+    id 'fabric-loom' version "0.12-SNAPSHOT"
     id 'maven-publish'
-    id 'org.cadixdev.licenser' version '0.6.0'
+    id 'org.cadixdev.licenser' version '0.6.1'
 }
 
 sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
@@ -15,9 +15,6 @@ license {
     include '**/*.java'
 }
 
-minecraft {
-}
-
 repositories {
     maven { url "https://maven.shedaniel.me" }
 }
@@ -25,7 +22,7 @@ repositories {
 dependencies {
     //to change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "me.shedaniel:legacy-yarn:${project.yarn_mappings}:v2"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}"
     modApi "net.fabricmc:fabric-loader:${project.loader_version}"
 
     // Fabric API. This is technically optional, but you probably want it anyway.
